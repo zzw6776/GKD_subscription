@@ -2,8 +2,28 @@ import { defineGkdApp } from '@gkd-kit/define';
 
 export default defineGkdApp({
   id: 'com.realtech.xiaocan',
-  name: '小蚕霸王餐',
+  name: '小蚕惠生活',
   groups: [
+    {
+      key: 0,
+      name: '开屏广告-宿主跳过',
+      desc: '仅点击宿主底部跳过按钮，不点击广告容器内的跳过；节点点击失败时不回退坐标点击',
+      enable: true,
+      activityIds: ['com.realtech.xiaocan.WelComeActivity'],
+      actionCd: 1000,
+      actionMaximum: 1,
+      resetMatch: 'app',
+      rules: [
+        {
+          key: 0,
+          fastQuery: true,
+          action: 'clickNode',
+          matches: [
+            "[id='com.realtech.xiaocan:id/tv_skip'][text='跳过'][clickable=true][visibleToUser=true][parent.id='com.realtech.xiaocan:id/splash_logo_container']",
+          ],
+        },
+      ],
+    },
     {
       key: 1,
       name: '全屏广告-弹窗广告',

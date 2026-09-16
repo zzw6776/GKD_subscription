@@ -17,11 +17,11 @@ apps.forEach((appConfig) => {
 
 export default defineGkdSubscription({
   id: 667,
-  name: 'id667的GKD订阅🚀',
+  name: 'zzw6776 的 GKD 订阅',
   version: 1,
-  author: '👻',
+  author: 'zzw6776',
   checkUpdateUrl: './gkd.version.json5',
-  supportUri: 'https://github.com/Lin-arm/GKD_subscription/issues/new/choose',
+  supportUri: 'https://github.com/zzw6776/GKD_subscription',
   categories,
   globalGroups,
   apps: rawApps,

@@ -777,6 +777,49 @@ export default defineGkdApp({
       ],
     },
     {
+      key: 35,
+      name: '局部广告-滴滴充电',
+      desc: '关闭费用确认、正在充电、出账中三个页面内的广告，不点击小程序工具栏关闭按钮',
+      enable: true,
+      activityIds: [
+        'com.alipay.mobile.nebulax.xriver.activity.XRiverActivity$App01',
+      ],
+      fastQuery: false,
+      actionCd: 2000,
+      rules: [
+        {
+          key: 0,
+          name: '费用确认-会员券弹窗',
+          action: 'clickCenter',
+          matches: [
+            "[id='com.alipay.multiplatform.phone.xriver_integration:id/textView_title'][text='费用确认']",
+            "[text='充电费用']",
+            "Image[visibleToUser=true][width>0][height>0][parent.childCount=1][parent.parent.childCount=2][parent.parent.getChild(0).name='android.widget.Image'][parent.parent.getChild(0).height>parent.parent.getChild(0).width][top>parent.parent.getChild(0).bottom]",
+          ],
+        },
+        {
+          key: 1,
+          name: '正在充电-倒计时广告',
+          action: 'clickCenter',
+          matches: [
+            "[id='com.alipay.multiplatform.phone.xriver_integration:id/textView_title'][text='正在充电']",
+            "[text='充电费用']",
+            "TextView[text~='[0-9]+s'] + Image[visibleToUser=true][width>0][width=height][parent.childCount=2]",
+          ],
+        },
+        {
+          key: 2,
+          name: '出账中-悬浮广告',
+          action: 'clickCenter',
+          matches: [
+            "[id='com.alipay.multiplatform.phone.xriver_integration:id/textView_title'][text='出账中...']",
+            "[text='账单上传中...']",
+            "Image[visibleToUser=true][width>0][width=height][parent.childCount=1][parent.parent.childCount=1][parent.parent.parent.childCount=2][parent.parent.parent.getChild(0).name='android.widget.Image'][width<parent.parent.parent.getChild(0).width][left>parent.parent.parent.getChild(0).left][top<parent.parent.parent.getChild(0).top]",
+          ],
+        },
+      ],
+    },
+    {
       key: 34,
       name: '功能类-小游戏申请发消息-拒绝',
       desc: '①保持以上选择 ②点击[取消] ③直接拒绝',

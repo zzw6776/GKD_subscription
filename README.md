@@ -1,13 +1,17 @@
-<!-- # @AIsouler/GKD_subscription (Fork版) -->
+# zzw6776 的 GKD 订阅
+
+基于 [Lin-arm/GKD_subscription](https://github.com/Lin-arm/GKD_subscription) 的个人分支。
+保留订阅 ID 667 及原有规则，额外加入小蚕宿主跳过、支付宝滴滴充电三条规则。
+已有 ID 667 订阅请编辑其订阅链接，不要重复添加。滴滴规则位于支付宝的“局部广告-滴滴充电”，需单独启用。
 
 <!-- [![SVG Banners](https://svg-banners.vercel.app/api?type=luminance&text1=GKD_subscription&width=800&height=300)](https://github.com/Lin-arm/GKD_subscription) -->
 
 [![SVG Banners](https://svg-banners.vercel.app/api?type=origin&text1=GKD第三方订阅规则&text2=💖%20GKD_subscription&width=800&height=350)](https://github.com/Lin-arm/GKD_subscription)
 
-[![Release](https://img.shields.io/badge/发行版-v588-blue)](https://github.com/Lin-arm/GKD_subscription/releases/latest)
+[![Release](https://img.shields.io/badge/发行版-v589-blue)](https://github.com/Lin-arm/GKD_subscription/releases/latest)
 [![已适配应用](https://img.shields.io/badge/已适配应用-977-brightgreen)](./dist/README.md#应用规则)
 [![全局规则组](https://img.shields.io/badge/全局规则组-3-blueviolet)](./dist/README.md#全局规则)
-[![应用规则组](https://img.shields.io/badge/应用规则组-2427-orange)](./dist/README.md#应用规则)
+[![应用规则组](https://img.shields.io/badge/应用规则组-2429-orange)](./dist/README.md#应用规则)
 [![Telegram Chat](https://img.shields.io/badge/Telegram-交流群-blue.svg?logo=telegram)](https://t.me/+8L4eHePgYEZmY2M9)
 
 ## 📢声明
@@ -21,22 +25,10 @@
 
 复制以下任一链接到 GKD 订阅的右下角 **+** 号那里导入，即可使用
 
-- 感谢由 CXPLAY 提供域名的CF源 (国内可用)
-
-  ```txt
-  https://gkd667.vv.ax/gkd.json5
-  ```
-
-- CloudFlare源 (国内可用)
-
-  ```txt
-  https://gkd-subscription-667.pages.dev/gkd.json5
-  ```
-
 - GitHub源 (国内需要魔法)
 
   ```txt
-  https://raw.githubusercontent.com/Lin-arm/GKD_subscription/main/dist/gkd.json5
+  https://raw.githubusercontent.com/zzw6776/GKD_subscription/main/dist/gkd.json5
   ```
 
 <details>
@@ -45,20 +37,20 @@
 - Xget源 (国内可用)
 
   ```txt
-  https://xget.xi-xu.me/gh/Lin-arm/GKD_subscription/raw/main/dist/gkd.json5
+  https://xget.xi-xu.me/gh/zzw6776/GKD_subscription/raw/main/dist/gkd.json5
   ```
 
 - jsdelivr源 (国内可用但可能不稳定,更新滞后24h)
 
   ```txt
-  https://cdn.jsdelivr.net/gh/Lin-arm/GKD_subscription@main/dist/gkd.json5
+  https://cdn.jsdelivr.net/gh/zzw6776/GKD_subscription@main/dist/gkd.json5
   ```
 
 </details>
 
-<!-- > 当前版本: v588
+<!-- > 当前版本: v589
 > 
-> 当前订阅文件已适配 977 个应用，共有 2427 应用规则组，3 全局规则组
+> 当前订阅文件已适配 977 个应用，共有 2429 应用规则组，3 全局规则组
 > 
 > 查看 [适配 APP 列表](./dist/README.md) -->
 
@@ -66,7 +58,7 @@
 
 - **致力于编写效率最高、误触最低、覆盖最全面的规则**
 
-- **已适配的规则需要等待发布更新才能生效，北京时间每天凌晨3点会自动发布更新，如果规则没有改动则不会发布更新，在 `GKD订阅界面` 下拉就能检测是否有更新 -> [点击查看更新日志](https://github.com/Lin-arm/GKD_subscription/releases)**
+- 本个人分支修改规则后运行 `pnpm build` 并提交 `dist` 产物；手机在订阅界面下拉检查更新。上游更新不会自动合并，避免覆盖个人规则。
 
 - **仅启用 `开屏广告` 一类规则，其它所有规则均需用户手动打开，规则类别里可以批量开启某一类规则，建议按需开启规则，不要无脑开启规则，开启过多规则可能造成规则阻塞从而导致规则触发缓慢甚至不触发，并且规则开启越多耗电也越多 -> [点击查看耗电说明](https://gkd.li/guide/faq#power)**
 
@@ -95,7 +87,7 @@
 
 ## 🥇感谢以下开发者的贡献
 
-![img](https://contrib.rocks/image?repo=Lin-arm/GKD_subscription&max=200&_v=588)
+![img](https://contrib.rocks/image?repo=Lin-arm/GKD_subscription&max=200&_v=589)
 
 <!-- repobeats 已失效 -->
 <!-- ![Alt](https://repobeats.axiom.co/api/embed/db6f46a4bdc4e760fb51976db276f1febef5bdce.svg "报告分析图") -->
