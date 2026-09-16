@@ -27,15 +27,16 @@ export default defineGkdApp({
     {
       key: 1,
       name: '全屏广告-弹窗广告',
-      matchTime: 10000,
-      actionMaximum: 1,
-      resetMatch: 'app',
       rules: [
         {
           key: 0,
+          name: '首页推广弹窗-关闭',
           fastQuery: true,
           activityIds: '.MainActivity',
-          matches: '[vid="box_custom"] >2 [vid="ivClose"][clickable=true]',
+          // 首页弹窗可能延迟出现或再次出现；有明确 ID 的规则不设启动时间/单次限制。
+          actionCd: 2000,
+          matches:
+            '[vid="box_custom"] >2 [vid="ivClose"][clickable=true][visibleToUser=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/31689742',
             'https://i.gkd.li/i/31689746',
@@ -43,6 +44,10 @@ export default defineGkdApp({
         },
         {
           key: 1,
+          // 无 ID 的旧结构规则仍保留原有查询时间和执行次数限制。
+          matchTime: 10000,
+          actionMaximum: 1,
+          resetMatch: 'app',
           activityIds: '.MainActivity',
           matches:
             'View[childCount=3] > View + ImageView + ImageView[clickable=true][childCount=0]',
