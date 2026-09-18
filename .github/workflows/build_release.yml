@@ -5,6 +5,9 @@ on:
     - cron: '0 19 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   check_changes:
     runs-on: ubuntu-slim
@@ -36,6 +39,8 @@ jobs:
     needs: check_changes
     if: ${{ needs.check_changes.outputs.changed == 'true' }}
     runs-on: ubuntu-slim
+    permissions:
+      contents: write
     outputs:
       version: ${{ steps.version.outputs.version }}
     steps:
