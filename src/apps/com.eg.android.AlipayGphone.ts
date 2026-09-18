@@ -821,6 +821,28 @@ export default defineGkdApp({
       ],
     },
     {
+      key: 36,
+      name: '其他-滴滴充电匿名反馈',
+      desc: '收起充电站匿名反馈弹窗，不提交是或否的反馈',
+      enable: true,
+      activityIds: [
+        'com.alipay.mobile.nebulax.xriver.activity.XRiverActivity$App01',
+      ],
+      fastQuery: false,
+      actionCd: 2000,
+      rules: [
+        {
+          key: 0,
+          action: 'clickCenter',
+          matchRoot: true,
+          matches: [
+            "[id='com.alipay.multiplatform.phone.xriver_integration:id/textView_title'][text='正在充电']",
+            "[text^='匿名反馈'][visibleToUser=true] + View[childCount=2] > View[childCount=1] > Image[visibleToUser=true][width>0][width=height]",
+          ],
+        },
+      ],
+    },
+    {
       key: 34,
       name: '功能类-小游戏申请发消息-拒绝',
       desc: '①保持以上选择 ②点击[取消] ③直接拒绝',
