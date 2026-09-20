@@ -818,6 +818,21 @@ export default defineGkdApp({
             "Image[visibleToUser=true][width>0][width=height][parent.childCount=1][parent.parent.childCount=1][parent.parent.parent.childCount=2][parent.parent.parent.getChild(0).name='android.widget.Image'][width<parent.parent.parent.getChild(0).width][left>parent.parent.parent.getChild(0).left][top<parent.parent.parent.getChild(0).top]",
           ],
         },
+        {
+          key: 3,
+          name: '正在充电-倒计时广告固定坐标兜底',
+          action: 'clickCenter',
+          matchRoot: true,
+          matches: [
+            "[id='com.alipay.multiplatform.phone.xriver_integration:id/textView_title'][text='正在充电']",
+            'WebView[visibleToUser=true] > View[visibleToUser=true] > View[visibleToUser=true][childCount=1] > View[visibleToUser=true][childCount=16]',
+          ],
+          excludeMatches: ["[text='充电费用']"],
+          position: {
+            x: 'screenWidth - 88',
+            y: 'screenHeight * 16 / 33',
+          },
+        },
       ],
     },
     {
