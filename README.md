@@ -1,17 +1,18 @@
 # zzw6776 的 GKD 订阅
 
 基于 [Lin-arm/GKD_subscription](https://github.com/Lin-arm/GKD_subscription) 的个人分支。
-保留订阅 ID 667 及原有规则，额外加入小蚕宿主跳过、支付宝滴滴充电三条规则。
+保留订阅 ID 667 及原有规则，额外加入小蚕宿主跳过、支付宝滴滴充电和追剧喵规则。
 已有 ID 667 订阅请编辑其订阅链接，不要重复添加。滴滴规则位于支付宝的“局部广告-滴滴充电”，需单独启用。
+追剧喵的“开屏广告-跳过广告”和“公告提示-关闭官方公告”默认启用；公告规则不额外开启强制轮询。
 
 <!-- [![SVG Banners](https://svg-banners.vercel.app/api?type=luminance&text1=GKD_subscription&width=800&height=300)](https://github.com/Lin-arm/GKD_subscription) -->
 
 [![SVG Banners](https://svg-banners.vercel.app/api?type=origin&text1=GKD第三方订阅规则&text2=💖%20GKD_subscription&width=800&height=350)](https://github.com/Lin-arm/GKD_subscription)
 
-[![Release](https://img.shields.io/badge/发行版-v593-blue)](https://github.com/Lin-arm/GKD_subscription/releases/latest)
-[![已适配应用](https://img.shields.io/badge/已适配应用-977-brightgreen)](./dist/README.md#应用规则)
+[![Release](https://img.shields.io/badge/发行版-v594-blue)](https://github.com/Lin-arm/GKD_subscription/releases/latest)
+[![已适配应用](https://img.shields.io/badge/已适配应用-978-brightgreen)](./dist/README.md#应用规则)
 [![全局规则组](https://img.shields.io/badge/全局规则组-3-blueviolet)](./dist/README.md#全局规则)
-[![应用规则组](https://img.shields.io/badge/应用规则组-2430-orange)](./dist/README.md#应用规则)
+[![应用规则组](https://img.shields.io/badge/应用规则组-2432-orange)](./dist/README.md#应用规则)
 [![Telegram Chat](https://img.shields.io/badge/Telegram-交流群-blue.svg?logo=telegram)](https://t.me/+8L4eHePgYEZmY2M9)
 
 ## 📢声明
@@ -48,9 +49,9 @@
 
 </details>
 
-<!-- > 当前版本: v593
+<!-- > 当前版本: v594
 > 
-> 当前订阅文件已适配 977 个应用，共有 2430 应用规则组，3 全局规则组
+> 当前订阅文件已适配 978 个应用，共有 2432 应用规则组，3 全局规则组
 > 
 > 查看 [适配 APP 列表](./dist/README.md) -->
 
@@ -60,7 +61,7 @@
 
 - 本个人分支修改规则后运行 `pnpm build` 并提交 `dist` 产物；手机在订阅界面下拉检查更新。上游更新不会自动合并，避免覆盖个人规则。
 
-- **仅启用 `开屏广告` 一类规则，其它所有规则均需用户手动打开，规则类别里可以批量开启某一类规则，建议按需开启规则，不要无脑开启规则，开启过多规则可能造成规则阻塞从而导致规则触发缓慢甚至不触发，并且规则开启越多耗电也越多 -> [点击查看耗电说明](https://gkd.li/guide/faq#power)**
+- **默认启用 `开屏广告` 和本分支新增的 `公告提示` 分类，其它分类需用户手动打开。规则类别里可以批量开启某一类规则，建议按需开启；开启过多规则可能造成规则阻塞、触发缓慢或耗电增加 -> [点击查看耗电说明](https://gkd.li/guide/faq#power)**
 
 - **请求适配或报告问题 -> [点击反馈](https://github.com/Lin-arm/GKD_subscription/issues/new/choose)**
 
@@ -87,7 +88,7 @@
 
 ## 🥇感谢以下开发者的贡献
 
-![img](https://contrib.rocks/image?repo=Lin-arm/GKD_subscription&max=200&_v=593)
+![img](https://contrib.rocks/image?repo=Lin-arm/GKD_subscription&max=200&_v=594)
 
 <!-- repobeats 已失效 -->
 <!-- ![Alt](https://repobeats.axiom.co/api/embed/db6f46a4bdc4e760fb51976db276f1febef5bdce.svg "报告分析图") -->

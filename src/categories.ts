@@ -64,4 +64,9 @@ export default defineGkdCategories([
     name: '其他',
     enable: false,
   },
+  {
+    key: 11,
+    name: '公告提示',
+    enable: true,
+  },
 ]);
