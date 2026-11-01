@@ -1,0 +1,40 @@
+{
+  "id": 2026110102,
+  "name": "追剧喵文字开屏·独立测试",
+  "version": 2,
+  "author": "zzw6776",
+  "globalGroups": [],
+  "categories": [],
+  "apps": [
+    {
+      "id": "com.jjpengcheng.callshow.zjmc",
+      "name": "追剧喵",
+      "groups": [
+        {
+          "key": 0,
+          "name": "开屏广告-文字倒计时跳过（测试）",
+          "desc": "仅在主页匹配无资源 ID 的文字跳过按钮，并核对相邻控件结构",
+          "enable": true,
+          "fastQuery": true,
+          "matchRoot": true,
+          "activityIds": ["com.jjpengcheng.callshow.zjmc.MainActivity"],
+          "matchTime": 15000,
+          "forcedTime": 10000,
+          "actionCd": 1000,
+          "actionMaximum": 1,
+          "resetMatch": "app",
+          "order": -10,
+          "rules": [
+            {
+              "key": 0,
+              "action": "clickNode",
+              "matches": [
+                "FrameLayout > View[id=null][text=null][clickable=true][childCount=0] + @TextView[text^=\"跳过\"][id=null][clickable=true][visibleToUser=true]"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

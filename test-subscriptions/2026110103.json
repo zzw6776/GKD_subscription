@@ -1,0 +1,39 @@
+{
+  "id": 2026110103,
+  "name": "追剧喵官方公告·独立测试",
+  "version": 1,
+  "author": "zzw6776",
+  "globalGroups": [],
+  "categories": [],
+  "apps": [
+    {
+      "id": "com.jjpengcheng.callshow.zjmc",
+      "name": "追剧喵",
+      "groups": [
+        {
+          "key": 0,
+          "name": "公告提示-官方公告容器定位（测试）",
+          "desc": "先通过 android:id/content 定位内容容器，再沿已验证的结构查找官方公告及关闭按钮",
+          "enable": true,
+          "fastQuery": true,
+          "matchRoot": true,
+          "matchTime": 20000,
+          "forcedTime": 0,
+          "actionCd": 1000,
+          "actionMaximum": 1,
+          "resetMatch": "app",
+          "order": -10,
+          "rules": [
+            {
+              "key": 0,
+              "action": "clickNode",
+              "matches": [
+                "[desc=\"APP官方公告\"][visibleToUser=true] +n @[desc=\"我知道了\"][clickable=true][visibleToUser=true] <n View < View < View < FrameLayout < [id=\"android:id/content\"]"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

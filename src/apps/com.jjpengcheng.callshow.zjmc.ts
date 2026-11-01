@@ -46,12 +46,12 @@ export default defineGkdApp({
       actionCd: 1000,
       actionMaximum: 1,
       resetMatch: 'app',
-      order: OPEN_AD_ORDER + 1,
+      order: OPEN_AD_ORDER,
       rules: [
         {
           key: 0,
           matches:
-            '[desc="APP官方公告"][visibleToUser=true] +n @[desc="我知道了"][clickable=true][visibleToUser=true]',
+            '[desc="APP官方公告"][visibleToUser=true] +n @[desc="我知道了"][clickable=true][visibleToUser=true] <n View < View < View < FrameLayout < [id="android:id/content"]',
           action: 'clickNode',
         },
       ],
@@ -70,6 +70,29 @@ export default defineGkdApp({
           key: 0,
           matches:
             '[vid="beizi_interstitial_ad_close_container_rl"][clickable=true][visibleToUser=true]',
+          action: 'clickNode',
+        },
+      ],
+    },
+    {
+      key: 3,
+      name: '开屏广告-文字跳过广告',
+      desc: '匹配无资源 ID 的文字跳过按钮，并核对相邻控件结构',
+      enable: true,
+      fastQuery: true,
+      matchRoot: true,
+      activityIds: ['com.jjpengcheng.callshow.zjmc.MainActivity'],
+      matchTime: 15000,
+      forcedTime: 10000,
+      actionCd: 1000,
+      actionMaximum: 1,
+      resetMatch: 'app',
+      order: OPEN_AD_ORDER,
+      rules: [
+        {
+          key: 0,
+          matches:
+            'FrameLayout > View[id=null][text=null][clickable=true][childCount=0] + @TextView[text^="跳过"][id=null][clickable=true][visibleToUser=true]',
           action: 'clickNode',
         },
       ],
