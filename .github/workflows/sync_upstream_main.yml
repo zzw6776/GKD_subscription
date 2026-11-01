@@ -1,0 +1,83 @@
+name: Sync upstream main
+
+on:
+  schedule:
+    # GitHub cron 使用 UTC；北京时间每天上午 10:00。
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-upstream-main
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.event.repository.fork
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      UPSTREAM_REPO: Lin-arm/GKD_subscription
+      TARGET_BRANCH: main
+      SKIP_SIMPLE_GIT_HOOKS: 1
+    steps:
+      - name: 检出个人分支
+        uses: actions/checkout@v7
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: 配置提交身份
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+      - name: 验证同步的成功和冲突处理
+        run: bash scripts/test-sync-upstream.sh
+
+      - name: 合并上游，有冲突立即停止
+        id: merge
+        run: bash scripts/sync-upstream.sh
+
+      - name: 配置 pnpm
+        if: steps.merge.outputs.changed == 'true'
+        uses: pnpm/action-setup@v6
+
+      - name: 配置 Node.js
+        if: steps.merge.outputs.changed == 'true'
+        uses: actions/setup-node@v6
+        with:
+          node-version: 25
+          cache: pnpm
+
+      - name: 配置 Python
+        if: steps.merge.outputs.changed == 'true'
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: 安装验证依赖
+        if: steps.merge.outputs.changed == 'true'
+        run: |
+          pnpm install --frozen-lockfile
+          python -m pip install ruff -r scripts/python/requirements.txt
+
+      - name: 检查并构建个人订阅
+        if: steps.merge.outputs.changed == 'true'
+        run: |
+          pnpm run build
+          ruff check scripts/python/
+          ruff format --check scripts/python/
+          cd scripts/python
+          PYTHONPATH=. python -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: 提交并普通推送
+        if: steps.merge.outputs.changed == 'true'
+        run: |
+          git add -A
+          git diff --cached --check
+          git commit -m 'chore: 自动同步上游规则并更新个人订阅'
+          git push origin "HEAD:refs/heads/${TARGET_BRANCH}"
+          printf '### 同步成功\n\n已合并上游、验证并构建个人订阅，普通推送完成。\n' >> "$GITHUB_STEP_SUMMARY"
