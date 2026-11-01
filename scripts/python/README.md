@@ -113,6 +113,7 @@ result = check_issue(
 from api.base import URLChecker
 from utils.models import LinkInfo
 
+
 class PRChecker(URLChecker):
     """PR 场景检查器"""
 
