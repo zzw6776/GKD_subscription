@@ -56,5 +56,23 @@ export default defineGkdApp({
         },
       ],
     },
+    {
+      key: 2,
+      name: '开屏广告-倍孜插屏广告',
+      desc: '关闭倍孜插屏广告，不限制进入页面后的匹配时间',
+      enable: true,
+      fastQuery: true,
+      matchRoot: true,
+      activityIds: ['com.beizi.ad.v2.activity.BeiZiNewInterstitialActivity'],
+      actionCd: 1500,
+      rules: [
+        {
+          key: 0,
+          matches:
+            '[vid="beizi_interstitial_ad_close_container_rl"][clickable=true][visibleToUser=true]',
+          action: 'clickNode',
+        },
+      ],
+    },
   ],
 });
