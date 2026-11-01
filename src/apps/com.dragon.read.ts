@@ -62,8 +62,11 @@ export default defineGkdApp({
           key: 1,
           activityIds: '.pages.main.MainFragmentActivity',
           matches:
-            '@ImageView[desc="Close Button"] <2 View < View < View < View < ComposeView < [id="android:id/content"]',
-          snapshotUrls: 'https://i.gkd.li/i/28907537',
+            '@ImageView[desc="Close Button"][clickable=true][visibleToUser=true] <2 View < View < View < View < * < [id="android:id/content"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/28907537',
+            'https://i.gkd.li/i/34167774',
+          ],
         },
         {
           key: 2,
@@ -86,9 +89,14 @@ export default defineGkdApp({
           key: 0,
           name: '电商惊喜券',
           activityIds: '.pages.main.MainFragmentActivity',
-          matches:
+          anyMatches: [
             '@LynxFlattenUI[id=null][text=""][clickable=true] - [text="去逛商城"] -4 [text$="电商惊喜券"]',
-          snapshotUrls: 'https://i.gkd.li/i/12910159',
+            '@ImageView[desc="dialog_close_icon"][clickable=true][visibleToUser=true] <n View[getChild(1).text="惊喜电商券即将失效"] < ComposeView < FrameLayout < [id="android:id/content"]',
+          ],
+          snapshotUrls: [
+            'https://i.gkd.li/i/12910159',
+            'https://i.gkd.li/i/34167848',
+          ],
         },
         {
           key: 1,
@@ -129,7 +137,7 @@ export default defineGkdApp({
           key: 5,
           activityIds: '.reader.ui.ReaderActivity',
           matches: 'TextView[text="广告"] +2 Button[vid="close"]',
-          snapshotUrls: 'https://i.gkd.li/i/13191156',
+          snapshotUrls: 'https://i.gkd.li/i/13191156', //无vid旧快照
         },
         {
           key: 6,
@@ -156,15 +164,10 @@ export default defineGkdApp({
         },
         {
           key: 8,
-          name: '坐标点击[关闭]',
-          activityIds: '.reader.ui.ReaderActivity',
-          position: {
-            left: 'width * 0.9141',
-            top: 'width * 0.0687',
-          },
+          activityIds: '.pages.main.MainFragmentActivity',
           matches:
-            '@ViewGroup[visibleToUser=true] < [childCount=2] - [childCount=1] >6 [vid="ttlive_player_render_view"]',
-          snapshotUrls: 'https://i.gkd.li/i/27706770',
+            'TextureView < FrameLayout + FrameLayout > TextView[text="关闭"][clickable=true][visibleToUser=true]',
+          snapshotUrls: 'https://i.gkd.li/i/34167893',
         },
       ],
     },
@@ -190,7 +193,7 @@ export default defineGkdApp({
         {
           key: 0,
           matches:
-            '@[(name$="ImageView" || getChild(0).name$="ImageView") && desc!="back_unfold"][clickable=true][visibleToUser=true][width<102 && height<102] <n [childCount>1] >(2,3) [text*="查看" || text$="优惠" || text^="立即" || text^="马上" || text*="参与" || text*="参加" || text*="免费" || (text*="领" && text*="券") || (text*="返" && text*="金币")][text!="查看下载"][text.length<10]',
+            '@[(name$="ImageView" || getChild(0).name$="ImageView") && desc!="back_unfold"][clickable=true][visibleToUser=true][width<102 && height<102] <n [childCount>1] >(2,3) [text*="查看" || text$="优惠" || text^="立即" || text^="马上" || text*="参与" || text*="参加" || text*="免费" || text^="领" || text$="金币"][text!="查看下载"][text.length<10]',
           snapshotUrls: [
             'https://i.gkd.li/i/12908734', // 查看详情
             'https://i.gkd.li/i/18138903', // 立享优惠
@@ -240,12 +243,16 @@ export default defineGkdApp({
           key: 3,
           name: '坐标点击[反馈]',
           position: {
-            top: 'width * 0.0617',
-            left: 'width * 0.7885',
+            left: 'width * 0.77',
+            top: 'height * 0.64',
           },
           matches:
-            '@ViewGroup[visibleToUser=true][height<150][width=prev.width] < [childCount=2] <3 FrameLayout[childCount=3] >7 [vid="ttlive_player_render_view"]',
-          snapshotUrls: 'https://i.gkd.li/i/28834344',
+            '@ViewGroup[visibleToUser=true][height<150][width=prev.width] < [childCount=2] <(2,3) FrameLayout[childCount<4] >7 [vid="ttlive_player_render_view"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/27706770',
+            'https://i.gkd.li/i/28834344',
+            'https://i.gkd.li/i/32435385',
+          ],
           exampleUrls: 'https://e.gkd.li/aef38288-d84b-4e13-8161-ebebc27b822b',
         },
         {
@@ -255,24 +262,32 @@ export default defineGkdApp({
           actionDelay: 200,
           matches:
             '[text="反馈" || desc="反馈"][visibleToUser=true][name$="UIText" || name$="ViewGroup"]',
-          exampleUrls: [
-            'https://e.gkd.li/3837a70f-30e3-42d1-9354-696dcda598b7',
-          ],
           snapshotUrls: [
             'https://i.gkd.li/i/13520160',
             'https://i.gkd.li/i/13816453',
             'https://i.gkd.li/i/24128141',
           ],
+          exampleUrls: 'https://e.gkd.li/3837a70f-30e3-42d1-9354-696dcda598b7',
+        },
+        {
+          key: 5,
+          matches:
+            '@ImageView[visibleToUser=true][width<100][right>parent.right.minus(100)] <n [vid="root_view"] >2 [text="播放全集"][focusable=true]',
+          /**
+           * [right>parent.right.minus(100)]
+           * 目标节点的 right , 与父节点的 right 的距离在 100 以内
+           */
+          snapshotUrls: 'https://i.gkd.li/i/34167862',
         },
 
         // 第二段
         {
           key: 50,
-          preKeys: [0, 1, 2, 3, 4],
+          preKeys: [0, 1, 2, 3, 4, 5],
           name: '②点击[不感兴趣/关闭此广告]',
           anyMatches: [
-            '@[clickable=true] > [text="不感兴趣" || text^="关闭此"]',
-            '[text="不感兴趣" || text^="关闭此"][clickable=true]',
+            '@[clickable=true] > [text="不感兴趣" || text^="关闭此" || text="关闭本次展示"]',
+            '[text="不感兴趣" || text^="关闭此" || text="关闭本次展示"][clickable=true]',
           ],
           snapshotUrls: [
             'https://i.gkd.li/i/13816454', //不感兴趣
@@ -280,6 +295,8 @@ export default defineGkdApp({
             'https://i.gkd.li/i/24128392', //不感兴趣
             'https://i.gkd.li/i/24189605', //关闭此广告
             'https://i.gkd.li/i/14540281', //关闭此条广告
+            'https://i.gkd.li/i/32435735', //不感兴趣
+            'https://i.gkd.li/i/34167884', //关闭本次展示
           ],
           exampleUrls: 'https://e.gkd.li/e04bcb90-ad61-43d9-97e9-b4f6e3873320',
         },
@@ -304,6 +321,10 @@ export default defineGkdApp({
       name: '权限提示-通知权限',
       desc: '点击"取消"',
       fastQuery: true,
+      activityIds: [
+        '.widget.ConfirmDialogBuilder',
+        '.pages.main.MainFragmentActivity',
+      ],
       rules: [
         {
           key: 0,
@@ -311,10 +332,6 @@ export default defineGkdApp({
           matchTime: 10000,
           actionMaximum: 1,
           resetMatch: 'app',
-          activityIds: [
-            '.widget.ConfirmDialogBuilder',
-            '.pages.main.MainFragmentActivity',
-          ],
           matches: [
             '[text="开启推送提醒"][visibleToUser=true]',
             '[text="取消"][visibleToUser=true]',
@@ -333,6 +350,12 @@ export default defineGkdApp({
             '[text="取消"][visibleToUser=true]',
           ],
           snapshotUrls: 'https://i.gkd.li/i/27190449',
+        },
+        {
+          key: 2,
+          matches:
+            'TextView[text="暂不开启"] < @[clickable=true] <n View < View < ComposeView < * < * < [id="android:id/content"]',
+          snapshotUrls: 'https://i.gkd.li/i/33832486',
         },
       ],
     },

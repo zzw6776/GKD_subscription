@@ -84,6 +84,28 @@ export default defineGkdApp({
       ],
     },
     {
+      key: 4,
+      name: '功能类-自动[关闭]弹幕',
+      desc: '仅在视频详情页生效',
+      rules: [
+        {
+          fastQuery: true,
+          actionCd: 3000, //防节点缓存未刷新导致重复触发
+          actionDelay: 300, //防点击太快无效
+          activityIds:
+            'com.bilibili.ship.theseus.detail.UnitedBizDetailsActivity',
+          matches:
+            '@[desc="关闭弹幕" || desc="Disable danmu"] <2 View < View < [vid="danmaku_input_parent"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/33745857', // 关闭弹幕
+            'https://i.gkd.li/i/34027203', // Disable danmu
+          ],
+          excludeSnapshotUrls: 'https://i.gkd.li/i/33745620', //弹幕已关闭
+          exampleUrls: 'https://e.gkd.li/abf8fe28-1d92-4603-9463-291f8ef66b92',
+        },
+      ],
+    },
+    {
       key: 6,
       name: '更新提示',
       fastQuery: true,
@@ -847,7 +869,7 @@ export default defineGkdApp({
           fastQuery: true,
           activityIds: '.ui.webview.MWebActivity',
           matches:
-            '@Image[text^="yellow-tip-close"] <3 [childCount=3] <2 [id="app"] <<3 [vid="webview"]',
+            '@Image[text^="yellow-tip-close"] <3 [childCount=3] <2 [id="app"] < WebView < WebView < [vid="webview"]',
           snapshotUrls: 'https://i.gkd.li/i/25563755',
         },
       ],
@@ -871,7 +893,7 @@ export default defineGkdApp({
           key: 1,
           activityIds: '.ui.webview.MWebActivity',
           matches:
-            'Image - @TextView[text="展开更多"] < View[childCount=2][visibleToUser=true] <n [id="app"] <<3 [vid="webview"]',
+            'Image - @TextView[text="展开更多"] < View[childCount=2][visibleToUser=true] <n [id="app"] < WebView < WebView < [vid="webview"]',
           snapshotUrls: 'https://i.gkd.li/i/25564200',
           // excludeSnapshotUrls: 'https://i.gkd.li/i/25564199', // 已展开状态
         },
@@ -898,11 +920,17 @@ export default defineGkdApp({
       rules: [
         {
           fastQuery: true,
+          matchRoot: true,
+          // forcedTime: 3600000, // 主动查询1小时
           activityIds:
             'com.bilibili.ship.theseus.detail.UnitedBizDetailsActivity',
           matches:
-            '@[text="取消"][clickable=true][visibleToUser=true] - [text="后将展示广告"] <2 View[childCount=3] <<2 ComposeView <<3 FrameLayout[childCount=1] <n * < [vid="video_container"]',
-          snapshotUrls: 'https://i.gkd.li/i/29379312',
+            '@[text="取消"] - [visibleToUser=true][text="后将展示广告"] <<n [vid="video_container"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/29379312',
+            'https://i.gkd.li/i/32741484',
+            'https://i.gkd.li/i/32783449',
+          ],
           exampleUrls: 'https://e.gkd.li/2fed6260-9cd4-4546-a8ea-de89fce88b5d',
         },
       ],

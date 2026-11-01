@@ -151,8 +151,8 @@ export default defineGkdApp({
     },
     {
       key: 1,
-      name: '功能类-电脑微信快捷自动登录',
-      desc: '点击[登录]',
+      name: '功能类-微信设备快捷登录',
+      desc: '自动点击[登录]Win/Mac/平板/手表等客户端',
       fastQuery: true,
       matchTime: 10000,
       actionMaximum: 1,
@@ -162,16 +162,15 @@ export default defineGkdApp({
             '.plugin.webwx.ui.ExtDeviceWXLoginUI',
             '.ui.LauncherUI',
           ],
-          matches: [
-            '[text^="登录 Win" || text^="登录 Mac" || text^="登录桌面" || text^="登入 WeChat" || text^="Log in to Weixin for"][visibleToUser=true]',
-            '[text="登录" || text="登入" || text="Log In"][visibleToUser=true]',
-          ],
+          matches:
+            'RelativeLayout[vid!=null][left!=0] > ImageView[width = height] + TextView[text^="登录" || text^="登入" || text^="Log in to Weixin for"][visibleToUser=true] +n * > Button[text="登录" || text="登入" || text="Log In"][visibleToUser=true]',
           snapshotUrls: [
             'https://i.gkd.li/i/13522625', // zh_CN
             'https://i.gkd.li/i/13522577',
             'https://i.gkd.li/i/22356438', // En_US
             'https://i.gkd.li/i/25315046', // zh_TW
             'https://i.gkd.li/i/25815630', // Linux_zh_CN
+            'https://i.gkd.li/i/32761015', // 平板
           ],
           exampleUrls: 'https://e.gkd.li/4434dd75-1c9c-4c4a-a6fb-47490b751ec4',
         },
@@ -294,37 +293,71 @@ export default defineGkdApp({
       ],
     },
     {
+      key: 6,
+      name: '功能类-自动[关闭]已抢完的红包',
+      desc: '点击x掉',
+      rules: [
+        {
+          fastQuery: true,
+          activityIds: '.plugin.luckymoney.ui.LuckyMoneyNewReceiveUI',
+          matches:
+            '@[desc="关闭"] - [visibleToUser=true] >3 [text^="手慢了"][text*="红包"][text.length<15]',
+          snapshotUrls: 'https://i.gkd.li/i/33950144',
+          exampleUrls: 'https://e.gkd.li/4786186b-49ab-44e5-b3b1-c3b78db4802b',
+        },
+      ],
+    },
+    {
       key: 7,
-      name: '功能类-自动选中发送原图',
+      name: '功能类-自动[选中]发送原图',
       desc: '自动选中底部中间的发送原图，可手动取消勾选',
+      fastQuery: true,
       actionMaximum: 1,
+      actionMaximumKey: 1,
       activityIds: [
-        '.plugin.gallery.ui.AlbumPreviewUI',
-        '.plugin.gallery.ui.ImagePreviewUI',
+        '.plugin.gallery.ui.AlbumPreviewUI', //A
+        '.plugin.gallery.ui.ImagePreviewUI', //B
+        '.plugin.picker.LocalMediaPickerUI', //C
+        '.plugin.picker.preview.LocalMediaPreviewUI', //D
       ],
       rules: [
         {
           key: 1,
-          fastQuery: true,
-          anyMatches: [
-            '@[desc^="未选中" || desc^="未選定" || desc^="Unselected"][visibleToUser=true] + [text="原图" || text="原圖" || text="Full Image"]',
-            '[desc^="未选中" || desc^="未選定" || desc^="Unselected"][!(desc*="选择")][text=null][visibleToUser=true]', //兜底,无快查的
-          ],
-          exampleUrls: [
-            'https://e.gkd.li/32dc0943-e85f-416d-bb01-6ed610d4bdd8',
-            'https://e.gkd.li/93d41161-ab69-4c2d-83bb-637d7292f5e6',
-          ],
+          matches:
+            '@[clickable=true][desc^="未选中" || desc^="未選定" || desc^="Unselected"] + [text="原图" || text="原圖" || text="Full Image"][visibleToUser=true]',
           snapshotUrls: [
-            'https://i.gkd.li/i/16987145', // 未选中
-            'https://i.gkd.li/i/16987144',
-            'https://i.gkd.li/i/27852612', // 无快查_En
-            'https://i.gkd.li/i/19625049', // 无快查
+            'https://i.gkd.li/i/16987145', //A [desc^="未选中"] + [text="原图"]
+            'https://i.gkd.li/i/16987144', //B [desc^="未选中"] + [text="原图"]
           ],
           excludeSnapshotUrls: [
-            'https://i.gkd.li/i/16987141', // 用 [text=null] 排除误触
-            'https://i.gkd.li/i/16987147', // 已选中
-            'https://i.gkd.li/i/27852606', // Selected
-            'https://i.gkd.li/i/29746331', // 用 [!(desc*="选择")] 排除误触
+            'https://i.gkd.li/i/16987147', //A [desc^="已选中"]
+            'https://i.gkd.li/i/27852606', //A [desc^="Selected"]
+          ],
+        },
+        {
+          key: 2,
+          matches:
+            '@[clickable=true] > [checkable=true][checked=false] + [text="原图" || text="原圖" || text="Full Image"][visibleToUser=true]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/32857934', //C [text="原图"]
+            'https://i.gkd.li/i/33297749', //D [text="原图"]
+          ],
+          exampleUrls: [
+            'https://e.gkd.li/150dd5c1-6425-4d36-b4a2-b42a9f27c40c',
+            'https://e.gkd.li/d46da56a-5382-4714-bcfd-89856f9aa309',
+          ],
+        },
+        {
+          key: 3, //兜底,无快查
+          matches:
+            '[clickable=true][desc^="未选中" || desc^="未選定" || desc^="Unselected"][!(desc*="选择")][text=null]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/27852612', //A [desc^="Unselected"]
+            'https://i.gkd.li/i/19625049', //A [desc^="未选中"]
+          ],
+          excludeSnapshotUrls: [
+            'https://i.gkd.li/i/16987141', //B 用 [text=null] 排除误触
+            'https://i.gkd.li/i/29746331', //B 用 [!(desc*="选择")] 排除误触
           ],
         },
       ],
@@ -370,6 +403,7 @@ export default defineGkdApp({
       activityIds: [
         '.plugin.appbrand.ui.AppBrandUI',
         '.plugin.appbrand.launching.AppBrandLaunchProxyUI',
+        '.plugin.appbrand.ui.AppBrandPluginUI',
       ],
       rules: [
         {
@@ -384,6 +418,7 @@ export default defineGkdApp({
             'https://i.gkd.li/i/13306883',
             'https://i.gkd.li/i/13407275',
             'https://i.gkd.li/i/15108441',
+            'https://i.gkd.li/i/32969391',
           ],
         },
         {
@@ -517,7 +552,6 @@ export default defineGkdApp({
       rules: [
         {
           key: 0,
-          versionCode: { maximum: 2979 },
           activityIds: '.framework.app.UIPageFragmentActivity',
           matches:
             '[vid="kinda_button_impl_wrapper"][desc="完成" || desc="返回商家"]',
@@ -527,6 +561,7 @@ export default defineGkdApp({
             'https://i.gkd.li/i/14662147', // 返回商家
             'https://i.gkd.li/i/14399355', // 完成
             'https://i.gkd.li/i/24157874',
+            'https://i.gkd.li/i/33430797',
           ],
           excludeSnapshotUrls: 'https://i.gkd.li/i/14532946',
         },
@@ -536,6 +571,7 @@ export default defineGkdApp({
           activityIds: [
             '.plugin.lite.ui.WxaLiteAppTransparentLiteUI',
             '.plugin.lite.ui.WxaLiteAppLiteUI',
+            '.plugin.lite.ui.WxaLiteAppPayTransparentLiteUI',
           ],
           matches:
             '@Button[desc="完成" || desc="返回商家" || desc="Done"][visibleToUser=true] -n [desc="支付成功"] < * <<6 FrameLayout <<3 [id="android:id/content"]',
@@ -544,6 +580,7 @@ export default defineGkdApp({
             'https://i.gkd.li/i/24141842', // 返回商家
             'https://i.gkd.li/i/29681932', // 完成
             'https://i.gkd.li/i/31693084', // 完成
+            'https://i.gkd.li/i/33480728', // 返回商家
           ],
         },
       ],
@@ -1207,6 +1244,24 @@ export default defineGkdApp({
           ],
           snapshotUrls: 'https://i.gkd.li/i/30642415',
           exampleUrls: 'https://e.gkd.li/0cb6496a-860e-41a5-b58a-16e07cc0214a',
+        },
+      ],
+    },
+    {
+      key: 57,
+      name: '功能类-登录-平板同时登',
+      desc: '自动点击[平板和手机同时登录]',
+      fastQuery: true,
+      actionMaximum: 1,
+      resetMatch: 'app',
+      matchTime: 10000,
+      activityIds: '.plugin.account.ui.LoginPasswordUI',
+      rules: [
+        {
+          matches:
+            '@Button[text="平板和手机同时登录"] - LinearLayout >3 [text="登录"]',
+          snapshotUrls: 'https://i.gkd.li/i/32757828',
+          exampleUrls: 'https://e.gkd.li/c3ca6901-9b7d-47d3-b879-69b615f8d09b',
         },
       ],
     },

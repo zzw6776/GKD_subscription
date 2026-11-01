@@ -110,7 +110,7 @@ export default defineGkdApp({
           activityIds:
             'com.bytedance.sdk.openadsdk.stub.activity.Stub_Standard_Portrait_Activity',
           matches:
-            '@Image[childCount=0][width<80 && height<80] < View[childCount=1] < View[childCount=1] - View[childCount=1] > [text="反馈"][visibleToUser=true]',
+            '@Image[childCount=0][width<80 && height<80] < View[childCount=1] < View[childCount=1] - View[childCount=1] > [visibleToUser=true][text="反馈"]',
           snapshotUrls: 'https://i.gkd.li/i/22946236',
         },
         {
@@ -146,12 +146,14 @@ export default defineGkdApp({
           activityIds: [
             'com.bytedance.sdk.openadsdk.core.component.reward.activity.TTFullScreenVideoActivity',
             'com.byazt.qde.Stub_Standard_Portrait_Activity',
+            'com.byazt.cef.Stub_Standard_Portrait_Activity',
           ],
           matches:
-            '@ImageView[visibleToUser=true][width<100 && height<100] <<3 ViewGroup[index=parent.childCount.minus(1)] <n ViewGroup + ViewGroup >3 [text="关闭悬浮球可继续浏览应用"]',
+            '@ImageView[visibleToUser=true][width<100 && height<100] < * < [childCount=1] < ViewGroup <2 [childCount=2] >6 [text*="落地页" || text*="三方APP"]',
           snapshotUrls: [
             'https://i.gkd.li/i/28790670',
             'https://i.gkd.li/i/28834493',
+            'https://i.gkd.li/i/33345377',
           ],
         },
         {
@@ -161,6 +163,34 @@ export default defineGkdApp({
           matches:
             '@ImageView[childCount=0][text=null][desc=null][id=null][visibleToUser=true][width<90 && height<90] < FrameLayout[childCount=1][text=null][desc=null][id=null][parent.childCount>3] <n * +n FrameLayout >(2,3) [text^="立即" || text$="详情" || text*="了解" || text="去微信看看" || text$="应用" || text="进入小程序" || text="领取优惠" || text="跳转微信"]',
           snapshotUrls: 'https://i.gkd.li/i/32145803',
+        },
+        {
+          key: 13,
+          fastQuery: true,
+          activityIds: 'com.baidu.mobads.sdk.api.MobRewardVideoActivity',
+          matches:
+            '@ImageView[clickable=true][visibleToUser=true][width<110 && height<110] + RelativeLayout >(2,3) [text="反馈"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/33430048',
+            'https://i.gkd.li/i/33430738',
+            'https://i.gkd.li/i/34107321',
+          ],
+        },
+        {
+          key: 14,
+          fastQuery: true,
+          activityIds: 'com.baidu.mobads.sdk.api.MobRewardVideoActivity',
+          matches:
+            '@ImageView[clickable=true][visibleToUser=true] + ImageView[clickable=true] + [text="点击或滑动查看奖励"]',
+          snapshotUrls: 'https://i.gkd.li/i/33430738',
+        },
+        {
+          key: 15,
+          fastQuery: true,
+          activityIds: 'com.baidu.mobads.sdk.api.MobRewardVideoActivity',
+          matches:
+            '@ImageView[clickable=true][visibleToUser=true][width<110 && height<110] - [text="反馈"]',
+          snapshotUrls: 'https://i.gkd.li/i/33430746',
         },
       ],
     },

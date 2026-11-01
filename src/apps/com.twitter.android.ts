@@ -39,8 +39,12 @@ export default defineGkdApp({
           key: 2, //无快查
           activityIds: 'com.x.android.main.MainActivity',
           matches:
-            '@ImageView[desc="发帖选项"] - [visibleToUser=true][text="Ad"]',
-          snapshotUrls: 'https://i.gkd.li/i/29085434',
+            '[text="Ad" || getChild(0).text$="推广"] +(1,4) ImageView[visibleToUser=true][desc="发帖选项"]',
+          snapshotUrls: [
+            'https://i.gkd.li/i/29085434', // Ad
+            'https://i.gkd.li/i/32325884', // 已推广
+            'https://i.gkd.li/i/34022771', // 由 Cindy App 推广
+          ],
         },
 
         // 第二段
@@ -210,6 +214,7 @@ export default defineGkdApp({
     {
       key: 6,
       name: '功能类-自动点击翻译',
+      desc: '⚠️对于v12.9.1及以上版本的推特失效',
       rules: [
         {
           fastQuery: true,
@@ -379,6 +384,32 @@ export default defineGkdApp({
             '[text="以后再说"] < @View[clickable=true] -2 [text^="认证标识很"][visibleToUser=true] <3 View[childCount=6] <<2 [vid="profile_upsell_compose"]',
           snapshotUrls: 'https://i.gkd.li/i/29405012',
           exampleUrls: 'https://e.gkd.li/6196a859-31ce-4d04-9f53-b9346bee25d6',
+        },
+      ],
+    },
+    {
+      key: 15,
+      name: '分段广告-帖子含视频广告',
+      desc: '①点击[跳过] ②点击[屏蔽]该用户',
+      fastQuery: true,
+      activityIds: 'com.x.android.main.MainActivity',
+      rules: [
+        {
+          key: 1,
+          name: '①点击[跳过]',
+          matches:
+            '[text="跳过"] < @[clickable=true] -n [text*="广告"] <n [visibleToUser=true] <2 [childCount=2] >4 [vid="exo_subtitles"]',
+          snapshotUrls: 'https://i.gkd.li/i/33950650',
+          exampleUrls: 'https://e.gkd.li/a9dbde18-fc31-4b28-b277-8ad19d0d3fcf',
+        },
+        {
+          key: 2,
+          preKeys: [1],
+          name: '②点击[屏蔽]该用户',
+          matches:
+            '@[text*="屏蔽"] < [clickable=true] <n ScrollView >2 [visibleToUser=true][text*="广告"]',
+          snapshotUrls: 'https://i.gkd.li/i/33951005',
+          exampleUrls: 'https://e.gkd.li/5a072c9d-f214-49c0-9446-cc5b185c3664',
         },
       ],
     },

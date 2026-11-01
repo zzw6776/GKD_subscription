@@ -9,7 +9,7 @@
 
 [![SVG Banners](https://svg-banners.vercel.app/api?type=origin&text1=GKD第三方订阅规则&text2=💖%20GKD_subscription&width=800&height=350)](https://github.com/Lin-arm/GKD_subscription)
 
-[![Release](https://img.shields.io/badge/发行版-v{{VERSION}}-blue)](https://github.com/Lin-arm/GKD_subscription/releases/latest)
+[![Release](https://img.shields.io/badge/发行版-v{{VERSION}}-blue)](https://github.com/zzw6776/GKD_subscription/releases/latest)
 [![已适配应用](https://img.shields.io/badge/已适配应用-{{APP_SIZE}}-brightgreen)](./dist/README.md#应用规则)
 [![全局规则组](https://img.shields.io/badge/全局规则组-{{GLOBALGROUP_SIZE}}-blueviolet)](./dist/README.md#全局规则)
 [![应用规则组](https://img.shields.io/badge/应用规则组-{{GROUP_SIZE}}-orange)](./dist/README.md#应用规则)
@@ -50,16 +50,16 @@
 </details>
 
 <!-- > 当前版本: v{{VERSION}}
-> 
+>
 > 当前订阅文件已适配 {{APP_SIZE}} 个应用，共有 {{GROUP_SIZE}} 应用规则组，{{GLOBALGROUP_SIZE}} 全局规则组
-> 
+>
 > 查看 [适配 APP 列表](./dist/README.md) -->
 
 ## 📑说明
 
 - **致力于编写效率最高、误触最低、覆盖最全面的规则**
 
-- 本个人分支修改规则后运行 `pnpm build` 并提交 `dist` 产物；手机在订阅界面下拉检查更新。上游更新不会自动合并，避免覆盖个人规则。
+- 本个人分支修改规则后运行 `pnpm build` 并提交 `dist` 产物；手机在订阅界面下拉检查更新。上游更新通过手动合并同步，并保留个人规则。
 
 - **默认启用 `开屏广告` 和本分支新增的 `公告提示` 分类，其它分类需用户手动打开。规则类别里可以批量开启某一类规则，建议按需开启；开启过多规则可能造成规则阻塞、触发缓慢或耗电增加 -> [点击查看耗电说明](https://gkd.li/guide/faq#power)**
 
