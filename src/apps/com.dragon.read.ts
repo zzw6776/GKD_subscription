@@ -52,7 +52,7 @@ export default defineGkdApp({
             '.ad.openingscreenad.OpeningScreenADActivity',
           ],
           matches:
-            '@ImageView[clickable=true][childCount=0][index=0][visibleToUser=true] < [childCount=3 || childCount=4] < RelativeLayout < FrameLayout <2 [id="android:id/content"][childCount=3]',
+            '@ImageView[clickable=true][childCount=0][index=0][visibleToUser=true] < [childCount=3 || childCount=4] < RelativeLayout < FrameLayout <(1,2) [id="android:id/content"][childCount=3]',
           snapshotUrls: [
             'https://i.gkd.li/i/12716506',
             'https://i.gkd.li/i/13318796',
