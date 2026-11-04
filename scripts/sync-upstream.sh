@@ -31,21 +31,41 @@ fi
 
 base_sha="$(git rev-parse HEAD)"
 if ! git merge --no-ff --no-commit --no-edit "upstream/$target_branch"; then
-  conflicts="$(git diff --name-only --diff-filter=U)"
-  if git rev-parse --verify -q MERGE_HEAD >/dev/null; then
-    git merge --abort
+  mapfile -t conflicts < <(git diff --name-only --diff-filter=U)
+  source_conflicts=()
+  for conflict in "${conflicts[@]}"; do
+    case "$conflict" in
+      README.md | dist/CHANGELOG.md | dist/README.md | dist/gkd.json5 | dist/gkd.version.json5)
+        ;;
+      *)
+        source_conflicts+=("$conflict")
+        ;;
+    esac
+  done
+
+  if [[ "${#conflicts[@]}" -gt 0 && "${#source_conflicts[@]}" -eq 0 ]]; then
+    # 这些文件由 pnpm run build 重新生成。先保留个人分支版本完成预合并，
+    # 避免版本号和压缩订阅文件的文本冲突阻断后续构建。
+    git checkout --ours -- "${conflicts[@]}"
+    git add -- "${conflicts[@]}"
+    printf '仅自动生成文件发生冲突，已保留个人分支临时版本，等待重新构建：\n%s\n' \
+      "$(printf '%s\n' "${conflicts[@]}")"
+  else
+    if git rev-parse --verify -q MERGE_HEAD >/dev/null; then
+      git merge --abort
+    fi
+    printf '::error::上游合并失败，已停止；没有提交或推送。\n' >&2
+    if [[ "${#conflicts[@]}" -gt 0 ]]; then
+      printf '冲突文件：\n%s\n' "$(printf '%s\n' "${conflicts[@]}")" >&2
+    fi
+    if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
+      {
+        printf '### 上游同步停止\n\n存在源文件冲突，远端分支未修改。请手动处理。\n\n'
+        printf '```text\n%s\n```\n' "$(printf '%s\n' "${conflicts[@]}")"
+      } >> "$GITHUB_STEP_SUMMARY"
+    fi
+    exit 1
   fi
-  printf '::error::上游合并失败，已停止；没有提交或推送。\n' >&2
-  if [[ -n "$conflicts" ]]; then
-    printf '冲突文件：\n%s\n' "$conflicts" >&2
-  fi
-  if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
-    {
-      printf '### 上游同步停止\n\n合并失败，远端分支未修改。请手动处理冲突。\n\n'
-      printf '```text\n%s\n```\n' "$conflicts"
-    } >> "$GITHUB_STEP_SUMMARY"
-  fi
-  exit 1
 fi
 
 # 保留本分支的同步策略，避免上游重新引入强制覆盖逻辑。

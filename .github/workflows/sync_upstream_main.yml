@@ -37,7 +37,7 @@ jobs:
       - name: 验证同步的成功和冲突处理
         run: bash scripts/test-sync-upstream.sh
 
-      - name: 合并上游，有冲突立即停止
+      - name: 合并上游，源文件冲突立即停止
         id: merge
         run: bash scripts/sync-upstream.sh
 

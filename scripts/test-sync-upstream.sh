@@ -73,6 +73,30 @@ git -C "$case_dir/fork" merge-base --is-ancestor \
   "$(git -C "$case_dir/upstream.git" rev-parse main)" HEAD
 printf 'PASS: 普通合并保留自定义规则和同步策略，并可普通推送。\n'
 
+case_dir="$test_dir/generated-conflict"
+create_repositories "$case_dir"
+mkdir -p "$case_dir/fork/dist" "$case_dir/upstream/dist"
+printf 'personal generated subscription\n' > "$case_dir/fork/dist/gkd.json5"
+git -C "$case_dir/fork" add dist/gkd.json5
+git -C "$case_dir/fork" commit -qm 'personal generated subscription'
+git -C "$case_dir/fork" push -q origin main
+printf 'upstream generated subscription\n' > "$case_dir/upstream/dist/gkd.json5"
+printf 'new upstream source\n' > "$case_dir/upstream/upstream.txt"
+git -C "$case_dir/upstream" add dist/gkd.json5 upstream.txt
+git -C "$case_dir/upstream" commit -qm 'upstream generated subscription'
+git -C "$case_dir/upstream" push -q origin main
+prepare_merge "$case_dir"
+grep -qx 'changed=true' "$case_dir/output"
+grep -qx 'personal generated subscription' "$case_dir/fork/dist/gkd.json5"
+grep -qx 'new upstream source' "$case_dir/fork/upstream.txt"
+test -f "$case_dir/fork/.git/MERGE_HEAD"
+test -z "$(git -C "$case_dir/fork" diff --name-only --diff-filter=U)"
+git -C "$case_dir/fork" commit -qm 'merge upstream with regenerated files pending'
+git -C "$case_dir/fork" push -q origin main
+git -C "$case_dir/fork" merge-base --is-ancestor \
+  "$(git -C "$case_dir/upstream.git" rev-parse main)" HEAD
+printf 'PASS: 仅生成文件冲突时保留个人临时版本并继续，等待后续重新构建。\n'
+
 case_dir="$test_dir/conflict"
 create_repositories "$case_dir"
 printf 'personal rule\n' > "$case_dir/fork/rules.txt"
