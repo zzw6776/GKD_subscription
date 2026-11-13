@@ -19,6 +19,16 @@ create_repositories() {
   mkdir -p "$case_dir/seed/scripts" "$case_dir/seed/.github/workflows"
   cp "$script_dir/sync-upstream.sh" "$case_dir/seed/scripts/sync-upstream.sh"
   printf 'protected workflow\n' > "$case_dir/seed/.github/workflows/sync_upstream_main.yml"
+  printf 'personal template\n' > "$case_dir/seed/Template.md"
+  mkdir -p "$case_dir/seed/src"
+  cat > "$case_dir/seed/src/subscription.ts" <<'EOF'
+export default {
+  name: 'base name',
+  author: 'base author',
+  supportUri: 'https://example.invalid/base',
+  feature: 'base feature',
+};
+EOF
   printf 'base rule\n' > "$case_dir/seed/rules.txt"
   git -C "$case_dir/seed" add .
   git -C "$case_dir/seed" commit -qm 'base'
@@ -96,6 +106,48 @@ git -C "$case_dir/fork" push -q origin main
 git -C "$case_dir/fork" merge-base --is-ancestor \
   "$(git -C "$case_dir/upstream.git" rev-parse main)" HEAD
 printf 'PASS: 仅生成文件冲突时保留个人临时版本并继续，等待后续重新构建。\n'
+
+case_dir="$test_dir/fork-owned-conflict"
+create_repositories "$case_dir"
+cat > "$case_dir/fork/src/subscription.ts" <<'EOF'
+export default {
+  name: 'personal name',
+  author: 'personal author',
+  supportUri: 'https://example.invalid/personal',
+  feature: 'base feature',
+};
+EOF
+printf 'personal template\n' > "$case_dir/fork/Template.md"
+git -C "$case_dir/fork" add src/subscription.ts Template.md
+git -C "$case_dir/fork" commit -qm 'personal metadata and template'
+git -C "$case_dir/fork" push -q origin main
+cat > "$case_dir/upstream/src/subscription.ts" <<'EOF'
+export default {
+  name: 'base name',
+  author: 'upstream author warning',
+  supportUri: 'https://example.invalid/base',
+  feature: 'upstream feature',
+};
+EOF
+printf 'upstream template notice\n' > "$case_dir/upstream/Template.md"
+git -C "$case_dir/upstream" add src/subscription.ts Template.md
+git -C "$case_dir/upstream" commit -qm 'upstream metadata and template'
+git -C "$case_dir/upstream" push -q origin main
+prepare_merge "$case_dir"
+grep -qx 'changed=true' "$case_dir/output"
+grep -qx 'personal template' "$case_dir/fork/Template.md"
+grep -q "name: 'personal name'" "$case_dir/fork/src/subscription.ts"
+grep -q "author: 'personal author'" "$case_dir/fork/src/subscription.ts"
+grep -q "supportUri: 'https://example.invalid/personal'" \
+  "$case_dir/fork/src/subscription.ts"
+grep -q "feature: 'upstream feature'" "$case_dir/fork/src/subscription.ts"
+test -f "$case_dir/fork/.git/MERGE_HEAD"
+test -z "$(git -C "$case_dir/fork" diff --name-only --diff-filter=U)"
+git -C "$case_dir/fork" commit -qm 'merge upstream with personal metadata'
+git -C "$case_dir/fork" push -q origin main
+git -C "$case_dir/fork" merge-base --is-ancestor \
+  "$(git -C "$case_dir/upstream.git" rev-parse main)" HEAD
+printf 'PASS: 个人模板和元数据保持不变，同时接收上游入口功能修改。\n'
 
 case_dir="$test_dir/conflict"
 create_repositories "$case_dir"
